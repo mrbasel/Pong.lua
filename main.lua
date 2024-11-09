@@ -1,16 +1,8 @@
+require('constants')
+
 if arg[2] == "debug" then
     require("lldebugger").start()
 end
-
-WINDOW_HEIGHT = 600
-WINDOW_WIDTH = 800
-PLAYER_WIDTH = 20
-PLAYER_HEIGHT = 80
-BALL_WIDTH = 10
-BALL_HEIGHT = 10
-INTIAL_BALL_SPEED = 350
-BALL_SPEED = 700
-INTIAL_ANGLE = 20
 
 math.randomseed(os.time())
 
@@ -33,7 +25,7 @@ end
 function love.load()
     pauseTime = 0
     lastScoreBy = nil
-    player1 = {
+    self = {
         x = 20,
         y = WINDOW_HEIGHT / 2,
         score = 0
@@ -67,10 +59,10 @@ function love.update(dt)
             player2.score = player2.score + 1
             lastScoreBy = 2
         else
-            player1.score = player1.score + 1
+            self.score = self.score + 1
             lastScoreBy = 1
         end
-        print("score : " .. player1.score .. " - " .. player2.score)
+        print("score : " .. self.score .. " - " .. player2.score)
         resetGame()
         pauseTime = 1
         return
@@ -82,23 +74,21 @@ function love.update(dt)
         ball.vy = -ball.vy
     end
 
-    if love.keyboard.isDown('down') and player1.y < WINDOW_HEIGHT - PLAYER_HEIGHT then
-        player1.y = player1.y + 300 * dt;
-    elseif love.keyboard.isDown('up') and player1.y > 0 then
-        player1.y = player1.y - 300 * dt;
+    if love.keyboard.isDown('down') and self.y < WINDOW_HEIGHT - PLAYER_HEIGHT then
+        self.y = self.y + 300 * dt;
+    elseif love.keyboard.isDown('up') and self.y > 0 then
+        self.y = self.y - 300 * dt;
     end
 
-    if ball.vx > 0 then
-        if ball.y - ((player2.y + player2.y + PLAYER_HEIGHT) / 2) > 10 and player2.y < WINDOW_HEIGHT - PLAYER_HEIGHT then
-            player2.y = player2.y + 300 * dt;
-        elseif ball.y - ((player2.y + player2.y + PLAYER_HEIGHT) / 2) < -10 and player2.y > 0 then
-            player2.y = player2.y - 300 * dt;
-        end
+    if ball.y - ((player2.y + player2.y + PLAYER_HEIGHT) / 2) > 10 and player2.y < WINDOW_HEIGHT - PLAYER_HEIGHT then
+        player2.y = player2.y + 300 * dt;
+    elseif ball.y - ((player2.y + player2.y + PLAYER_HEIGHT) / 2) < -10 and player2.y > 0 then
+        player2.y = player2.y - 300 * dt;
     end
 
-    if (checkCollisionPlayer1(player1)) then
-        local y = player1.y
-        local yh = player1.y + PLAYER_HEIGHT
+    if (checkCollisionPlayer1(self)) then
+        local y = self.y
+        local yh = self.y + PLAYER_HEIGHT
         local center = (y + yh) / 2
         local relativeYIntersect = ball.y - center
         local normalizedRelativeYIntersect = relativeYIntersect / (PLAYER_HEIGHT / 2)
@@ -136,7 +126,7 @@ end
 
 function love.draw()
     love.graphics.rectangle("fill", ball.x, ball.y, BALL_WIDTH, BALL_HEIGHT)
-    love.graphics.rectangle("fill", player1.x, player1.y, PLAYER_WIDTH, PLAYER_HEIGHT)
+    love.graphics.rectangle("fill", self.x, self.y, PLAYER_WIDTH, PLAYER_HEIGHT)
     love.graphics.rectangle("fill", player2.x, player2.y, PLAYER_WIDTH, PLAYER_HEIGHT)
-    love.graphics.print('1')
+    love.graphics.print(self.score .. ' - ' .. player2.score)
 end
