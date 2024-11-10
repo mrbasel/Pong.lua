@@ -40,6 +40,18 @@ function love.load()
 end
 
 function love.update(dt)
+    if love.keyboard.isDown('down') then
+        player1:move('down', dt)
+    elseif love.keyboard.isDown('up') and player1.y > 0 then
+        player1:move('up', dt)
+    end
+
+    if ball.y - ((player2.y + player2.y + PLAYER_HEIGHT) / 2) > 10 and player2.y < WINDOW_HEIGHT - PLAYER_HEIGHT then
+        player2:move('down', dt)
+    elseif ball.y - ((player2.y + player2.y + PLAYER_HEIGHT) / 2) < -10 and player2.y > 0 then
+        player2:move('up', dt)
+    end
+
     if pauseTime > 0 then
         pauseTime = pauseTime - dt
         return
@@ -58,19 +70,6 @@ function love.update(dt)
     end
 
     ball:move(dt)
-
-    if love.keyboard.isDown('down') then
-        player1:move('down', dt)
-    elseif love.keyboard.isDown('up') and player1.y > 0 then
-        player1:move('up', dt)
-    end
-
-    if ball.y - ((player2.y + player2.y + PLAYER_HEIGHT) / 2) > 10 and player2.y < WINDOW_HEIGHT - PLAYER_HEIGHT then
-        player2:move('down', dt)
-    elseif ball.y - ((player2.y + player2.y + PLAYER_HEIGHT) / 2) < -10 and player2.y > 0 then
-        player2:move('up', dt)
-    end
-
     if player1:isColliding(ball, 1) then
         ball:onCollision(player1)
     end
