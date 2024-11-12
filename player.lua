@@ -12,9 +12,9 @@ function Player:create(x)
 end
 
 function Player:move(direction, dt)
-    if direction == 'up' and player1.y > 0 then
+    if direction == 'up' and self.y > 0 then
         self.y = self.y - 300 * dt;
-    elseif direction == 'down' and player1.y < WINDOW_HEIGHT - PLAYER_HEIGHT then
+    elseif direction == 'down' and self.y < WINDOW_HEIGHT - PLAYER_HEIGHT then
         self.y = self.y + 300 * dt;
     end
 end

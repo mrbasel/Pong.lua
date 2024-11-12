@@ -27,15 +27,15 @@ function Ball:onCollision(player)
     local y = player.y
     local yh = player.y + PLAYER_HEIGHT
     local center = (y + yh) / 2
-    local relativeYIntersect = ball.y - center
+    local relativeYIntersect = self.y - center
     local normalizedRelativeYIntersect = relativeYIntersect / (PLAYER_HEIGHT / 2)
     local angle = normalizedRelativeYIntersect * math.rad(50)
-    local oldVx = ball.vx
-    ball.vx = BALL_SPEED * math.cos(-angle)
-    ball.vy = BALL_SPEED * math.sin(-angle)
+    local oldVx = self.vx
+    self.vx = BALL_SPEED * math.cos(-angle)
+    self.vy = BALL_SPEED * math.sin(-angle)
     if oldVx < 0 then
-        ball.vy = -ball.vy
+        self.vy = -self.vy
     else 
-        ball.vx = -ball.vx
+        self.vx = -self.vx
     end
 end

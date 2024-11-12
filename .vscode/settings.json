@@ -1,5 +1,8 @@
 {
     "Lua.diagnostics.disable": [
         "duplicate-set-field"
+    ],
+    "Lua.diagnostics.globals": [
+        "love",
     ]
 }
