@@ -20,9 +20,13 @@ function love.update(dt)
 end
 
 function love.draw()
-    love.graphics.rectangle("fill", game.ball.x, game.ball.y, BALL_WIDTH, BALL_HEIGHT)
     love.graphics.rectangle("fill", game.player1.x, game.player1.y, PLAYER_WIDTH, PLAYER_HEIGHT)
     love.graphics.rectangle("fill", game.player2.x, game.player2.y, PLAYER_WIDTH, PLAYER_HEIGHT)
+
+    -- dont draw ball if game is paused (pause after goal is scored)
+    if game.pauseTime == 0 then
+        love.graphics.rectangle("fill", game.ball.x, game.ball.y, BALL_WIDTH, BALL_HEIGHT)
+    end
     
     love.graphics.print(tostring(game.player1.score), font, WINDOW_WIDTH / 4, 50, 0)
     love.graphics.print(tostring(game.player2.score), font, WINDOW_WIDTH - WINDOW_WIDTH / 4, 50, 0)

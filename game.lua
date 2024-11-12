@@ -36,6 +36,8 @@ function Game:loop(dt)
     if self.pauseTime > 0 then
         self.pauseTime = self.pauseTime - dt
         return
+    else
+        self.pauseTime = 0
     end
     if self.ball.x < 0 or self.ball.x > WINDOW_WIDTH then
         if self.ball.x < 0 then
