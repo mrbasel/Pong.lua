@@ -1,4 +1,3 @@
-
 Game = {}
 Game.__index = Game
 
@@ -72,4 +71,8 @@ function Game:onScore()
 
     self.ball.vx = INTIAL_BALL_SPEED * math.cos(math.rad(angle))
     self.ball.vy = INTIAL_BALL_SPEED * math.sin(math.rad(angle))
+end
+
+function Game:shouldDrawBall()
+    return game.pauseTime == 0
 end
